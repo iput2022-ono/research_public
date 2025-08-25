@@ -1,0 +1,7 @@
+git+https://github.com/AmbientDataInc/ambient-python-lib.git
+RPi.GPIO
+python-dotenv
+sensirion_i2c_driver
+sensirion_i2c_scd
+spidev
+w1thermsensor

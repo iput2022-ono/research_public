@@ -2,13 +2,21 @@ import time
 from sensors.ds18b20_sensor import DS18B20Sensor
 from sensors.ec_sensor import ECSensor
 from sensors.scd41_sensor   import SCD41Sensor
-from utils.buffer_utils import has_buffer, load_buffer, save_buffer_csv, send_buffered
+# from utils.buffer_utils import has_buffer, load_buffer, save_buffer_csv, send_buffered
 from gpio_control import GpioController
 import socket
 import ambient
 from datetime import datetime, timezone
 import argparse
+from dotenv import load_dotenv
+import os
 
+# .env
+load_dotenv()
+# AMBIENT_CHANNEL_ID = os.getenv("AMBIENT_CHANEL_ID")
+# AMBIENT_WRITE_KEY = os.getenv("AMBIENT_WRITE_KEY")
+AMBIENT_CHANNEL_ID_TEST = os.getenv("AMBIENT_CHANEL_ID_TEST")
+AMBIENT_WRITE_KEY_TEST = os.getenv("AMBIENT_WRITE_KEY_TEST")
 # Ambient設定
 # ambi = ambient.Ambient(AMBIENT_CHANNEL_ID, AMBIENT_WRITE_KEY)
 ambi = ambient.Ambient(AMBIENT_CHANNEL_ID_TEST, AMBIENT_WRITE_KEY_TEST)
@@ -138,14 +146,14 @@ try:
                             print("[Ambient] 送信成功")
                         else:
                             print("[Ambient] 送信失敗 CSV保存")
-                            save_buffer_csv(f_water_temp, f_co2, f_temp, f_hum, sensortime)
+                            # save_buffer_csv(f_water_temp, f_co2, f_temp, f_hum, sensortime)
 
                     except Exception as e:
                         print("[Ambient] 例外:", e)
-                        save_buffer_csv(f_water_temp, f_co2, f_temp, f_hum, sensortime)
+                        # save_buffer_csv(f_water_temp, f_co2, f_temp, f_hum, sensortime)
                 else:
                     print("[Ambient] ネットワーク未接続のためCSV保存")
-                    save_buffer_csv(f_water_temp, f_co2, f_temp, f_hum, sensortime)
+                    # save_buffer_csv(f_water_temp, f_co2, f_temp, f_hum, sensortime)
             else:
                 print("[Ambient] センサデータが不完全なため送信を中止しました")
 
@@ -159,6 +167,6 @@ try:
             time.sleep(0.1)
 
 except KeyboardInterrupt:
-    print("＞プログラムを終了します。")
+    print("＞プログラムを終了します")
 finally:
     gpio.cleanup()
